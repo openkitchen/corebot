@@ -18,8 +18,7 @@ import javax.inject.Inject
  * @author Pete Cornish {@literal <outofcoffee@gmail.com>}
  */
 class Bootstrap @Inject constructor(actionDriverFactory: ActionDriverFactory,
-                                    factoryService: FactoryService,
-                                    templateService: TemplateService) {
+                                    factoryService: FactoryService,templateService: TemplateService) {
     init {
         // drivers
         actionDriverFactory.registerDriver("items", ItemsActionDriverImpl::class.java)
