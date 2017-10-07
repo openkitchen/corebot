@@ -9,7 +9,6 @@ import com.gatehill.corebot.util.yamlMapper
 import com.gatehill.dlcl.Collector
 import com.gatehill.dlcl.Downloader
 import com.gatehill.dlcl.classloader.ChildFirstDownloadingClassLoader
-import com.gatehill.dlcl.exclusion
 import com.gatehill.dlcl.jcenter
 import com.gatehill.dlcl.jitpack
 import com.gatehill.dlcl.mavenCentral
@@ -27,13 +26,15 @@ class PluginService {
     fun fetchPlugins() {
         val pluginEnvironment = loadPluginEnvironment()
         val repos = listRepos(pluginEnvironment)
-        val excludes = pluginEnvironment.exclusions.map { exclusion(it.groupId, it.artifactId) }
 
         with(fetchPluginConfig()) {
             frontends.map { it.dependency }
                     .union(backends.map { it.dependency })
                     .union(storage.map { it.dependency })
-                    .forEach { Downloader(PluginSettings.localRepo, it, excludes, repos).download() }
+                    .forEach {
+                        val downloader = Downloader(PluginSettings.localRepo, null, emptyList(), repos)
+                        downloader.downloadSingleDependency(it)
+                    }
         }
     }
 

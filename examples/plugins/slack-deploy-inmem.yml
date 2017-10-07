@@ -1,11 +1,11 @@
 ---
 frontends:
-- dependency: com.gatehill.corebot:frontends-slack:0.10.0-SNAPSHOT
+- dependency: com.gatehill.corebot:slack-frontend-plugin:war:1.1.0-SNAPSHOT
   classes:
   - com.gatehill.corebot.SlackModule
 
 backends:
-- dependency: com.gatehill.corebot:backends-deployment:0.10.0-SNAPSHOT
+- dependency: com.gatehill.corebot:jenkins-backend-plugin:war:1.1.0-SNAPSHOT
   classes:
   - com.gatehill.corebot.driver.jobs.JobsDriverModule
   - com.gatehill.corebot.driver.jenkins.JenkinsDriverModule
