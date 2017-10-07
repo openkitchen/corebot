@@ -1,22 +1,26 @@
 package com.gatehill.corebot
 
-import com.gatehill.corebot.action.factory.ShowHelpFactory
-import com.gatehill.corebot.action.factory.StatusActionFactory
-import com.gatehill.corebot.action.factory.StatusOptionFactory
-import com.gatehill.corebot.action.factory.UnlockActionFactory
-import com.gatehill.corebot.action.factory.UnlockOptionFactory
-import com.gatehill.corebot.chat.template.TemplateService
+import com.gatehill.corebot.operation.factory.LockActionFactory
+import com.gatehill.corebot.operation.factory.LockOptionFactory
+import com.gatehill.corebot.operation.factory.ShowHelpFactory
+import com.gatehill.corebot.operation.factory.StatusActionFactory
+import com.gatehill.corebot.operation.factory.StatusOptionFactory
+import com.gatehill.corebot.operation.factory.UnlockActionFactory
+import com.gatehill.corebot.operation.factory.UnlockOptionFactory
 import com.gatehill.corebot.chat.template.FactoryService
+import com.gatehill.corebot.chat.template.TemplateService
 import com.gatehill.corebot.driver.ActionDriverFactory
-import com.gatehill.corebot.driver.jenkins.action.JenkinsActionDriver
-import com.gatehill.corebot.driver.rundeck.action.RundeckActionDriver
+import com.gatehill.corebot.backend.jenkins.action.JenkinsActionDriver
+import com.gatehill.corebot.backend.jobs.action.factory.DisableJobFactory
+import com.gatehill.corebot.backend.jobs.action.factory.EnableJobFactory
+import com.gatehill.corebot.backend.rundeck.action.RundeckActionDriver
 import javax.inject.Inject
 
 /**
  * @author Pete Cornish {@literal <outofcoffee@gmail.com>}
  */
 class BotBootstrap @Inject constructor(actionDriverFactory: ActionDriverFactory,
-                                    factoryService: FactoryService,templateService: TemplateService) {
+                                       factoryService: FactoryService, templateService: TemplateService) {
     init {
         // drivers
         actionDriverFactory.registerDriver("rundeck", RundeckActionDriver::class.java)

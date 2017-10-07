@@ -2,7 +2,9 @@ package com.gatehill.corebot
 
 import com.gatehill.corebot.action.OperationFactoryConverter
 import com.gatehill.corebot.action.NoOpOperationFactoryConverter
-import com.gatehill.corebot.driver.items.ItemsDriverModule
+import com.gatehill.corebot.backend.items.ItemsDriverModule
+import com.gatehill.corebot.bot.Bot
+import com.gatehill.corebot.frontend.slack.SlackModule
 import com.google.inject.AbstractModule
 
 fun main(args: Array<String>) {

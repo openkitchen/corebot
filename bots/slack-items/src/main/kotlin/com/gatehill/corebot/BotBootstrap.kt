@@ -1,14 +1,14 @@
 package com.gatehill.corebot
 
-import com.gatehill.corebot.action.factory.ShowHelpFactory
-import com.gatehill.corebot.chat.template.TemplateService
+import com.gatehill.corebot.operation.factory.ShowHelpFactory
+import com.gatehill.corebot.chat.template.FactoryService
 import javax.inject.Inject
 
 /**
  * @author Pete Cornish {@literal <outofcoffee@gmail.com>}
  */
-class BotBootstrap @Inject constructor(templateService: TemplateService) {
+class BotBootstrap @Inject constructor(factoryService: FactoryService) {
     init {
-        templateService.registerFactory(ShowHelpFactory::class.java)
+        factoryService.registerFactory(ShowHelpFactory::class.java)
     }
 }

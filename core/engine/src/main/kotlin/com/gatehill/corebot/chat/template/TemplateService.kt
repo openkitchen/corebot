@@ -1,8 +1,8 @@
 package com.gatehill.corebot.chat.template
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import com.gatehill.corebot.action.factory.OperationFactory
-import com.gatehill.corebot.action.factory.readOperationFactoryMetadata
+import com.gatehill.corebot.operation.factory.OperationFactory
+import com.gatehill.corebot.operation.factory.readOperationFactoryMetadata
 import com.gatehill.corebot.chat.filter.FilterConfig
 import com.gatehill.corebot.chat.filter.RegexFilter
 import com.gatehill.corebot.chat.filter.StringFilter

@@ -33,6 +33,9 @@ project(':core:api').name = 'core-api'
 include ':core:engine'
 project(':core:engine').name = 'core-engine'
 
+include ':core:plugin'
+project(':core:plugin').name = 'core-plugin'
+
 include ':core:rest'
 project(':core:rest').name = 'core-rest'
 
