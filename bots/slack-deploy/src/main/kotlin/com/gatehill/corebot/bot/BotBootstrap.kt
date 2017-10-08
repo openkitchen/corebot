@@ -1,7 +1,7 @@
-package com.gatehill.corebot
+package com.gatehill.corebot.bot
 
-import com.gatehill.corebot.operation.factory.ShowHelpFactory
 import com.gatehill.corebot.chat.template.FactoryService
+import com.gatehill.corebot.operation.factory.ShowHelpFactory
 import javax.inject.Inject
 
 /**

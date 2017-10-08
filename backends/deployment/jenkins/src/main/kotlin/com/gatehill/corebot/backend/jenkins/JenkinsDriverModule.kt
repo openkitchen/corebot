@@ -8,6 +8,7 @@ import com.google.inject.AbstractModule
 
 class JenkinsDriverModule : AbstractModule() {
     override fun configure() {
+        bind(JenkinsDriverBootstrap::class.java).asEagerSingleton()
         bind(JenkinsActionDriver::class.java).to(JenkinsActionDriverImpl::class.java).asSingleton()
         bind(JenkinsJobTriggerService::class.java).asSingleton()
     }

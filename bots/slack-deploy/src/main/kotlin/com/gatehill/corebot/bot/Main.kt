@@ -1,11 +1,11 @@
-package com.gatehill.corebot
+package com.gatehill.corebot.bot
 
 import com.gatehill.corebot.action.OperationFactoryConverter
+import com.gatehill.corebot.asSingleton
 import com.gatehill.corebot.backend.jenkins.JenkinsDriverModule
 import com.gatehill.corebot.backend.jobs.JobsDriverModule
 import com.gatehill.corebot.backend.jobs.action.TriggerOperationFactoryConverter
 import com.gatehill.corebot.backend.rundeck.RundeckDriverModule
-import com.gatehill.corebot.bot.Bot
 import com.gatehill.corebot.frontend.slack.SlackModule
 import com.google.inject.AbstractModule
 

@@ -47,13 +47,15 @@ private fun downloadPlugins(pluginService: PluginService) {
 
 private fun runBot(pluginService: PluginService) {
     println("Loading plugins from ${PluginSettings.localRepo}")
-    val modules = pluginService.loadPluginInstances() + BotModule()
+    val modules = pluginService.instantiatePluginModules() + BotModule()
     Bot.build(*modules.toTypedArray()).start()
 }
 
 private class BotModule : AbstractModule() {
     override fun configure() {
         bind(BotBootstrap::class.java).asEagerSingleton()
+
+        // FIXME this should form part of the plugin configuration or plugin module
         bind(OperationFactoryConverter::class.java).to(NoOpOperationFactoryConverter::class.java).asSingleton()
     }
 }

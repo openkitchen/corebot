@@ -14,12 +14,15 @@ import com.gatehill.dlcl.jitpack
 import com.gatehill.dlcl.mavenCentral
 import com.gatehill.dlcl.model.DependencyType
 import com.google.inject.Module
+import org.apache.logging.log4j.LogManager
 
 /**
  *
  * @author pete
  */
 class PluginService {
+    private val logger = LogManager.getLogger(PluginService::class.java)
+
     fun clearRepo() {
         Collector(PluginSettings.localRepo).clearCollected()
     }
@@ -29,13 +32,16 @@ class PluginService {
         val repos = listRepos(pluginEnvironment)
 
         with(fetchPluginConfig()) {
-            frontends.map { it.dependency }
+            val allDependencies = frontends.map { it.dependency }
                     .union(backends.map { it.dependency })
                     .union(storage.map { it.dependency })
-                    .forEach {
-                        val downloader = Downloader(PluginSettings.localRepo, null, emptyList(), repos)
-                        downloader.downloadSingleDependency(it)
-                    }
+
+            logger.debug("Fetching ${allDependencies.size} plugins")
+
+            allDependencies.forEach {
+                val downloader = Downloader(PluginSettings.localRepo, null, emptyList(), repos)
+                downloader.downloadSingleDependency(it)
+            }
         }
     }
 
@@ -48,7 +54,7 @@ class PluginService {
     private fun listRepos(pluginEnvironment: PluginEnvironment = loadPluginEnvironment()) =
             pluginEnvironment.repositories.toList().union(listOf(mavenCentral, jcenter, jitpack)).toList()
 
-    fun loadPluginInstances(): Collection<Module> {
+    fun instantiatePluginModules(): Collection<Module> {
         val classLoader = ChildFirstDownloadingClassLoader(
                 PluginSettings.localRepo, listRepos(), PluginService::class.java.classLoader)
 
@@ -61,12 +67,16 @@ class PluginService {
         val pluginConfig = fetchPluginConfig()
 
         // frontends and backends are instantiated the same way
-        return pluginConfig.frontends.union(pluginConfig.backends).flatMap { (_, classes) ->
-            classes.map { className ->
-                @Suppress("UNCHECKED_CAST")
-                val moduleClass: Class<Module> = classLoader.loadClass(className) as Class<Module>
-                moduleClass.newInstance()
-            }
+        val distinctClassNames = pluginConfig.frontends.union(pluginConfig.backends)
+                .flatMap { (_, classes) -> classes }
+                .distinct()
+
+        logger.debug("Loading ${distinctClassNames.size} distinct front end and back end plugin modules")
+
+        return distinctClassNames.map { className ->
+            @Suppress("UNCHECKED_CAST")
+            val moduleClass: Class<Module> = classLoader.loadClass(className) as Class<Module>
+            moduleClass.newInstance()
         }
     }
 

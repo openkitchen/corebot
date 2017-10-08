@@ -9,6 +9,7 @@ import com.gatehill.corebot.chat.template.FactoryService
 import com.gatehill.corebot.chat.template.TemplateService
 import com.gatehill.corebot.backend.jobs.action.factory.DisableJobFactory
 import com.gatehill.corebot.backend.jobs.action.factory.EnableJobFactory
+import com.gatehill.corebot.operation.factory.StatusOptionFactory
 import javax.inject.Inject
 
 /**
@@ -25,5 +26,6 @@ class JobsDriverBootstrap @Inject constructor(factoryService: FactoryService,
         factoryService.registerFactory(DisableJobFactory::class.java)
         factoryService.registerFactory(LockOptionFactory::class.java)
         factoryService.registerFactory(UnlockOptionFactory::class.java)
+        factoryService.registerFactory(StatusOptionFactory::class.java)
     }
 }
