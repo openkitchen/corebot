@@ -55,7 +55,8 @@ private class BotModule : AbstractModule() {
     override fun configure() {
         bind(BotBootstrap::class.java).asEagerSingleton()
 
-        // FIXME this should form part of the plugin configuration or plugin module
+        // this may be overridden by a backend module
+        // TODO register converters instead of overriding
         bind(OperationFactoryConverter::class.java).to(NoOpOperationFactoryConverter::class.java).asSingleton()
     }
 }

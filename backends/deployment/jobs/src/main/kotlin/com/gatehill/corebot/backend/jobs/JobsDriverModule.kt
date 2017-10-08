@@ -1,7 +1,9 @@
 package com.gatehill.corebot.backend.jobs
 
 import com.gatehill.corebot.action.LockService
+import com.gatehill.corebot.action.NoOpOperationFactoryConverter
 import com.gatehill.corebot.asSingleton
+import com.gatehill.corebot.backend.jobs.action.TriggerOperationFactoryConverter
 import com.gatehill.corebot.store.DataStoreModule
 import com.google.inject.AbstractModule
 
@@ -17,5 +19,9 @@ class JobsDriverModule : AbstractModule() {
 
         // data stores
         install(DataStoreModule("lockStore"))
+
+        // override operation factory
+        // TODO register converters instead of overriding
+        bind(NoOpOperationFactoryConverter::class.java).to(TriggerOperationFactoryConverter::class.java)
     }
 }
