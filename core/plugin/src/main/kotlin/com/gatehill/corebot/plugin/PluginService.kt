@@ -12,6 +12,7 @@ import com.gatehill.dlcl.classloader.ChildFirstDownloadingClassLoader
 import com.gatehill.dlcl.jcenter
 import com.gatehill.dlcl.jitpack
 import com.gatehill.dlcl.mavenCentral
+import com.gatehill.dlcl.model.DependencyType
 import com.google.inject.Module
 
 /**
@@ -41,8 +42,11 @@ class PluginService {
     private fun loadPluginEnvironment() = yamlMapper.readValue<PluginEnvironment>(ClassLoaderUtil.classLoader.getResourceAsStream(
             "plugin-environment.yml"), jacksonTypeRef<PluginEnvironment>())
 
+    /**
+     * Configured repositories take precedence.
+     */
     private fun listRepos(pluginEnvironment: PluginEnvironment = loadPluginEnvironment()) =
-            listOf(mavenCentral, jcenter, jitpack).union(pluginEnvironment.repositories.toList()).toList()
+            pluginEnvironment.repositories.toList().union(listOf(mavenCentral, jcenter, jitpack)).toList()
 
     fun loadPluginInstances(): Collection<Module> {
         val classLoader = ChildFirstDownloadingClassLoader(
@@ -52,7 +56,7 @@ class PluginService {
         ClassLoaderUtil.classLoader = classLoader
 
         // load the already-downloaded classes
-        classLoader.load()
+        classLoader.load(DependencyType.JAR)
 
         val pluginConfig = fetchPluginConfig()
 

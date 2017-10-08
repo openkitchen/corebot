@@ -1,5 +1,4 @@
 # Plugin environment configuration.
 ---
 repositories:
- exposed: "https://dl.bintray.com/kotlin/exposed"
- gatehill: "https://gatehillsoftware-maven.s3.amazonaws.com/snapshots/"
+  gatehill: "https://gatehillsoftware-maven.s3.amazonaws.com/snapshots/"
